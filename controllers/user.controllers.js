@@ -1,6 +1,10 @@
 const User = require("../models/user")
    bcrypt  = require("bcrypt")
-   
+   jwt     = require("jsonwebtoken")
+passportLocal = require("passport")
+
+require("../config/passport-local")(passportLocal)
+
 exports.home = (req,res) => {
    res.json({message: "Hello World Web API"})
 }
@@ -33,4 +37,37 @@ exports.signup = (req,res) => {
             })
          }
       })
+}
+
+exports.signin = (req, res) => {
+   passportLocal.authenticate('local', {session: false}, (err, user, info) => {
+      if (err || !user) {
+          return res.status(400).json({
+              message: info ? info.message : 'Login failed',
+              user   : user
+          });
+      }
+      req.login(user, {session: false}, (err) => {
+         if (err) {
+            res.send(err);
+         }{
+            const payload = {
+               id: user.id,
+               email: user.email
+            }
+            jwt.sign(payload, "ILovePokemon" , {expiresIn: "1h"} , function(err,token){
+               if(err){
+                  return res.json(err)
+               }else{
+                  return res.json({user, token});
+               }
+             });
+         }
+      });
+  })(req,res)
+};
+
+exports.getUser = async (req,res) => {
+   const user = await req.user;
+   res.json(user)
 }
