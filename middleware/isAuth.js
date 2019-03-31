@@ -5,7 +5,6 @@ exports.isAuth = (req, res, next) => {
        passport.authenticate('jwt', {session: false}, function (err, user, info) {
            if ((!err || !info) && user) {
                req.user = user;
-               
                return next();
            }
            res.status(401).json({authenticated: false, message: "Login expired."});

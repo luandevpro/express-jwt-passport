@@ -32,9 +32,9 @@ module.exports = function(passport){
       }
    ));
 
-   passport.use(new JwtStrategy(opts, function(jwt_payload, done) {
+   passport.use("jwt",new JwtStrategy(opts, function(jwt_payload, done) {
       User
-         .findOne({where: {id: jwt_payload.sub}})
+         .findOne({where: {id: jwt_payload.id}})
          .then((user) => {
             if(user){
                return done(null, user);

@@ -53,7 +53,8 @@ exports.signin = (req, res) => {
          }{
             const payload = {
                id: user.id,
-               email: user.email
+               email: user.email,
+               name: user.name
             }
             jwt.sign(payload, "ILovePokemon" , {expiresIn: "1h"} , function(err,token){
                if(err){
