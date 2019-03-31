@@ -6,4 +6,8 @@ router
    .route("/")
    .get(userControllers.home)
 
+router
+   .route("/api/users/signup")
+   .post(userControllers.signup)
+
 module.exports = router
