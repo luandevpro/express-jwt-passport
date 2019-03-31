@@ -66,3 +66,8 @@ exports.signin = (req, res) => {
       });
   })(req,res)
 };
+
+exports.getUser = async (req,res) => {
+   const user = await req.user;
+   res.json(user)
+}
