@@ -3,6 +3,7 @@ const express       = require("express")
       port          = process.env.port || 8080
       dotEnv        = require("dotenv")
       mongoose      = require("mongoose")
+      passport      = require("passport")
 
 dotEnv.config()
 app.use(express.json())
@@ -12,6 +13,8 @@ mongoose
    .connect(process.env.URI_DB , { useNewUrlParser: true })
    .then(() => console.log("connect database success"))
    .catch(err => console.log(err))
+
+app.use(passport.initialize())
 
 app.use("/",require("./routes"))
 

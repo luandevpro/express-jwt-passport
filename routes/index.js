@@ -10,4 +10,8 @@ router
    .route("/api/users/signup")
    .post(userControllers.signup)
 
+router
+   .route("/api/users/signin")
+   .post(userControllers.signin)
+
 module.exports = router
