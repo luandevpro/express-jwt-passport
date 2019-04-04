@@ -2,6 +2,7 @@ const express     = require("express")
       router      = express.Router()
    userControllers= require("../controllers/user.controllers")
    middleware     = require("../middleware/isAuth")
+   passport       = require("passport")
 
 router
    .route("/")
@@ -18,5 +19,9 @@ router
 router
    .route("/api/users/profile")
    .get(middleware.isAuth,userControllers.getUser)
+
+router
+   .route("/api/users/current")
+   .get(userControllers.getUserCurrent)
 
 module.exports = router

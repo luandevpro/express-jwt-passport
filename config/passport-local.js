@@ -32,20 +32,16 @@ module.exports = function(passport){
       }
    ));
 
-   passport.use("jwt",new JwtStrategy(opts, function(jwt_payload, done) {
-      User.findOne({where: {id: jwt_payload.id}}, function(err, user) {
-         if (err) {
-            console.log("hello")
-            return done(err, false);
-         }
-         if (user) {
-            console.log(user,"hello")
-            return done(null, user);
-         } else {
-            console.log(user,"hello")
-            return done(null, false);
-         }
-      });
+   passport.use("jwt" , new JwtStrategy(opts, function(jwt_payload, done) {
+      User
+         .findOne({where: {id: jwt_payload.id}})
+         .then(user => {
+            if(!user){
+               return done(null, false)
+            }else{
+               return done(null, user)
+            }
+         })
    }));
 }
  

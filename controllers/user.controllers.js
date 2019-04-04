@@ -50,9 +50,9 @@ exports.signin = (req, res) => {
             res.send(err);
          }{
             const payload = {
-               id: user.id,
-               name: user.name,
-               email: user.email
+               "id": user.id,
+               "name": user.name,
+               "email": user.email
             }
             jwt.sign(payload, "ILovePokemon" , {expiresIn: "1h"} , function(err,token){
                if(err){
@@ -64,9 +64,19 @@ exports.signin = (req, res) => {
          }
       });
   })(req,res)
-};
+}
 
 exports.getUser = async (req,res) => {
    const user = await req.user;
    res.json(user)
+}
+
+exports.getUserCurrent = (req,res) => {
+   User
+      .findAll()
+      .then(user => {
+         console.log(user);
+         res.json(user)
+      })
+      .catch(err => res.json(err))
 }
